@@ -22,7 +22,7 @@ type GameState = {
   resetGame: () => void;
 };
 
-const shuffleArray = (array: any[]) =>
+const shuffleArray = (array: string[]) =>
   [...array].sort(() => Math.random() - 0.5);
 
 export const useGameStore = create<GameState>((set) => ({
