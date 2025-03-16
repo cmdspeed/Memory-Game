@@ -1,0 +1,32 @@
+.card {
+  width: 100px;
+  height: 100px;
+  background: #ccc;
+  border: 2px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  &.flipped {
+    background: white;
+  }
+
+  &.matched {
+    background: lightgreen;
+  }
+
+  img {
+    width: 80%;
+    height: 80%;
+  }
+
+  .back {
+    background-color: #ddd;
+    width: 80%;
+    height: 80%;
+    border-radius: 5px;
+  }
+}
