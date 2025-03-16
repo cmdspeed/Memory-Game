@@ -4,8 +4,9 @@
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
-  .reset-button {
-    margin-bottom: 20px;
+  .reset-button,
+  .level {
+    margin: 5px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
@@ -17,6 +18,11 @@
 
     &:hover {
       background-color: #45a049;
+    }
+
+    &.active {
+      background-color: #3e8e41;
+      border: 2px solid #2c6a2f;
     }
   }
 
