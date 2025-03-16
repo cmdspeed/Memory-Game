@@ -51,6 +51,7 @@ export const useGameStore = create<GameState>((set) => ({
         } else {
           setTimeout(() => {
             set((s) => ({
+              // s = current state | c = single card in the array
               cards: s.cards.map((c) =>
                 c.flipped && !c.matched ? { ...c, flipped: false } : c
               ),
