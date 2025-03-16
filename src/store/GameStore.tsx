@@ -22,7 +22,7 @@ type GameState = {
   resetGame: () => void;
 };
 
-const shuffleArray = (array: any[]) =>
+const shuffleArray = (array: string[]) =>
   [...array].sort(() => Math.random() - 0.5);
 
 export const useGameStore = create<GameState>((set) => ({
@@ -51,6 +51,7 @@ export const useGameStore = create<GameState>((set) => ({
         } else {
           setTimeout(() => {
             set((s) => ({
+              // s = current state | c = single card in the array
               cards: s.cards.map((c) =>
                 c.flipped && !c.matched ? { ...c, flipped: false } : c
               ),
