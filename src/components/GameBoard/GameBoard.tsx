@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useGameStore } from "../../store/GameStore";
 import { Card } from "./Card";
 import "../styles/GameBoard/GameBoard.scss";
-import { GameStats } from "../GameStats/GamaStats";
+import { GameStats } from "../GameStats/GameStats";
 
 export const GameBoard: React.FC = () => {
   const { cards, resetGame, setDifficulty } = useGameStore();
