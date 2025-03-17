@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useGameStore } from "../../store/GameStore";
 import { Card } from "./Card";
 import "../styles/GameBoard/GameBoard.scss";
 import { GameStats } from "../GameStats/GameStats";
 
 export const GameBoard: React.FC = () => {
-  const { cards, resetGame, setDifficulty } = useGameStore();
+  const { cards, resetGame, setDifficulty, startTimer, stopTimer } =
+    useGameStore();
 
   const [selectedLevel, setSelectedLevel] = useState<
     "easy" | "medium" | "hard"
   >("easy");
+
+  useEffect(() => {
+    startTimer();
+  }, [startTimer]);
 
   const handleLevelClick = (level: "easy" | "medium" | "hard") => {
     setSelectedLevel(level);

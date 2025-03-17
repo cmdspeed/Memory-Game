@@ -48,9 +48,13 @@ type GameState = {
   cards: CardType[];
   difficulty: "easy" | "medium" | "hard";
   score: number;
+  timer: number;
+  intervalId: number;
   setDifficulty: (difficulty: "easy" | "medium" | "hard") => void;
   flipCard: (id: number) => void;
   resetGame: () => void;
+  startTimer: () => void;
+  stopTimer: () => void;
 };
 
 const shuffleArray = (array: string[]) =>
@@ -81,10 +85,34 @@ const generateCards = (difficulty: "easy" | "medium" | "hard") => {
   }));
 };
 
-export const useGameStore = create<GameState>((set) => ({
+export const useGameStore = create<GameState>((set, get) => ({
   cards: generateCards("easy"),
   difficulty: "easy",
   score: 0,
+  timer: 0,
+  intervalId: 0,
+
+  startTimer: () => {
+    set((state) => {
+      if (state.intervalId) {
+        clearInterval(state.intervalId);
+      }
+
+      const interval = setInterval(() => {
+        set((s) => ({ timer: s.timer + 1 }));
+      }, 1000);
+
+      return { intervalId: interval };
+    });
+  },
+  stopTimer: () => {
+    const { intervalId, timer } = get();
+    if (intervalId) {
+      clearInterval(intervalId);
+      set({ intervalId: null });
+      alert(`Brawo! Zajęło Ci to ${timer} sekund.`);
+    }
+  },
 
   flipCard: (id) =>
     set((state) => {
@@ -115,6 +143,12 @@ export const useGameStore = create<GameState>((set) => ({
         }
       }
 
+      if (newCards.every((card) => card.matched)) {
+        setTimeout(() => {
+          get().stopTimer();
+        }, 500);
+      }
+
       return { cards: newCards };
     }),
 
@@ -122,6 +156,8 @@ export const useGameStore = create<GameState>((set) => ({
     set((state) => ({
       cards: generateCards(state.difficulty),
       score: 0,
+      timer: 0,
+      intervalId: 0,
     })),
 
   setDifficulty: (difficulty) =>
@@ -129,5 +165,7 @@ export const useGameStore = create<GameState>((set) => ({
       difficulty,
       cards: generateCards(difficulty),
       score: 0,
+      timer: 0,
+      intervalId: 0,
     })),
 }));
