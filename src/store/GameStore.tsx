@@ -1,5 +1,6 @@
 // Zustand store
 import { create } from "zustand";
+
 import icon1 from "../images/icon1.png";
 import icon2 from "../images/icon2.png";
 import icon3 from "../images/icon3.png";
@@ -82,13 +83,6 @@ const generateCards = (difficulty: "easy" | "medium" | "hard") => {
 export const useGameStore = create<GameState>((set) => ({
   cards: generateCards("easy"),
   difficulty: "easy",
-
-  // cards: shuffleArray([...images, ...images]).map((image, index) => ({
-  //   id: index,
-  //   image,
-  //   matched: false,
-  //   flipped: false,
-  // })),
 
   flipCard: (id) =>
     set((state) => {
