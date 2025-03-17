@@ -1,6 +1,6 @@
 import React from "react";
 import { useGameStore } from "../../store/GameStore";
-import "./styles/Card.scss";
+import "../styles/Card/Card.scss";
 
 type CardProps = {
   id: number;

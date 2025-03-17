@@ -1,5 +1,6 @@
 // Zustand store
 import { create } from "zustand";
+
 import icon1 from "../images/icon1.png";
 import icon2 from "../images/icon2.png";
 import icon3 from "../images/icon3.png";
@@ -46,6 +47,7 @@ type CardType = {
 type GameState = {
   cards: CardType[];
   difficulty: "easy" | "medium" | "hard";
+  score: number;
   setDifficulty: (difficulty: "easy" | "medium" | "hard") => void;
   flipCard: (id: number) => void;
   resetGame: () => void;
@@ -82,13 +84,7 @@ const generateCards = (difficulty: "easy" | "medium" | "hard") => {
 export const useGameStore = create<GameState>((set) => ({
   cards: generateCards("easy"),
   difficulty: "easy",
-
-  // cards: shuffleArray([...images, ...images]).map((image, index) => ({
-  //   id: index,
-  //   image,
-  //   matched: false,
-  //   flipped: false,
-  // })),
+  score: 0,
 
   flipCard: (id) =>
     set((state) => {
@@ -101,6 +97,8 @@ export const useGameStore = create<GameState>((set) => ({
       );
 
       if (flippedCards.length === 2) {
+        set((state) => ({ score: state.score + 1 }));
+
         if (flippedCards[0].image === flippedCards[1].image) {
           newCards.forEach((card) => {
             if (card.image === flippedCards[0].image) card.matched = true;
@@ -123,11 +121,13 @@ export const useGameStore = create<GameState>((set) => ({
   resetGame: () =>
     set((state) => ({
       cards: generateCards(state.difficulty),
+      score: 0,
     })),
 
   setDifficulty: (difficulty) =>
     set(() => ({
       difficulty,
       cards: generateCards(difficulty),
+      score: 0,
     })),
 }));
