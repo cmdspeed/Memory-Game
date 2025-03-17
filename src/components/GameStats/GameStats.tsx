@@ -7,7 +7,7 @@ export const GameStats = () => {
   return (
     <div className="game-stats">
       <p>Liczba prób: {score}</p>
-      <p>czas: {timer}</p>
+      <p>czas: {timer} sek</p>
     </div>
   );
 };

@@ -106,11 +106,13 @@ export const useGameStore = create<GameState>((set, get) => ({
     });
   },
   stopTimer: () => {
-    const { intervalId, timer } = get();
+    const { intervalId, timer, score } = get();
     if (intervalId) {
       clearInterval(intervalId);
-      set({ intervalId: null });
-      alert(`Brawo! Zajęło Ci to ${timer} sekund.`);
+      set({ intervalId: 0 });
+      alert(`Brawo! Zajęło Ci to ${timer} sekund. liczba prób: ${score}`);
+      get().resetGame();
+      get().startTimer();
     }
   },
 
@@ -157,7 +159,6 @@ export const useGameStore = create<GameState>((set, get) => ({
       cards: generateCards(state.difficulty),
       score: 0,
       timer: 0,
-      intervalId: 0,
     })),
 
   setDifficulty: (difficulty) =>

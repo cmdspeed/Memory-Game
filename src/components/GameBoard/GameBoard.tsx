@@ -5,8 +5,7 @@ import "../styles/GameBoard/GameBoard.scss";
 import { GameStats } from "../GameStats/GameStats";
 
 export const GameBoard: React.FC = () => {
-  const { cards, resetGame, setDifficulty, startTimer, stopTimer } =
-    useGameStore();
+  const { cards, resetGame, setDifficulty, startTimer } = useGameStore();
 
   const [selectedLevel, setSelectedLevel] = useState<
     "easy" | "medium" | "hard"
