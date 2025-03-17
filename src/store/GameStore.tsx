@@ -86,8 +86,6 @@ export const useGameStore = create<GameState>((set) => ({
   difficulty: "easy",
   score: 0,
 
-  addScore: () => set((state) => ({ score: state.score + 1 })),
-
   flipCard: (id) =>
     set((state) => {
       const newCards = state.cards.map((card) =>
@@ -130,5 +128,6 @@ export const useGameStore = create<GameState>((set) => ({
     set(() => ({
       difficulty,
       cards: generateCards(difficulty),
+      score: 0,
     })),
 }));
