@@ -47,6 +47,7 @@ type CardType = {
 type GameState = {
   cards: CardType[];
   difficulty: "easy" | "medium" | "hard";
+  score: number;
   setDifficulty: (difficulty: "easy" | "medium" | "hard") => void;
   flipCard: (id: number) => void;
   resetGame: () => void;
@@ -83,6 +84,9 @@ const generateCards = (difficulty: "easy" | "medium" | "hard") => {
 export const useGameStore = create<GameState>((set) => ({
   cards: generateCards("easy"),
   difficulty: "easy",
+  score: 0,
+
+  addScore: () => set((state) => ({ score: state.score + 1 })),
 
   flipCard: (id) =>
     set((state) => {
@@ -95,6 +99,8 @@ export const useGameStore = create<GameState>((set) => ({
       );
 
       if (flippedCards.length === 2) {
+        set((state) => ({ score: state.score + 1 }));
+
         if (flippedCards[0].image === flippedCards[1].image) {
           newCards.forEach((card) => {
             if (card.image === flippedCards[0].image) card.matched = true;
@@ -117,6 +123,7 @@ export const useGameStore = create<GameState>((set) => ({
   resetGame: () =>
     set((state) => ({
       cards: generateCards(state.difficulty),
+      score: 0,
     })),
 
   setDifficulty: (difficulty) =>
