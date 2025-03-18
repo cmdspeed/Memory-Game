@@ -55,6 +55,7 @@ type GameState = {
   resetGame: () => void;
   startTimer: () => void;
   stopTimer: () => void;
+  saveGameHistory: () => void;
 };
 
 const shuffleArray = (array: string[]) =>
@@ -76,6 +77,7 @@ const generateCards = (difficulty: "easy" | "medium" | "hard") => {
       pairs = 6;
   }
   const selectedImages = shuffleArray(images).slice(0, pairs);
+
   const cards = [...selectedImages, ...selectedImages];
   return shuffleArray(cards).map((image, index) => ({
     id: index,
@@ -105,14 +107,29 @@ export const useGameStore = create<GameState>((set, get) => ({
       return { intervalId: interval };
     });
   },
+  saveGameHistory() {
+    const { score, timer, difficulty } = get();
+    const historyItem = {
+      score,
+      timer,
+      difficulty,
+      date: new Date().toLocaleString(),
+    };
+
+    const history = JSON.parse(localStorage.getItem("gameHistory") ?? "[]");
+    history.push(historyItem);
+    localStorage.setItem("gameHistory", JSON.stringify(history));
+  },
+
   stopTimer: () => {
-    const { intervalId, timer, score } = get();
+    const { intervalId, timer, score, saveGameHistory } = get();
     if (intervalId) {
       clearInterval(intervalId);
       set({ intervalId: 0 });
       alert(
         `Well done! It took you ${timer} seconds. number of attempts: ${score}`
       );
+      saveGameHistory();
       get().resetGame();
       get().startTimer();
     }
