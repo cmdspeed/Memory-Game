@@ -50,6 +50,7 @@ type GameState = {
   score: number;
   timer: number;
   intervalId: number;
+  isFlipping: boolean;
   setDifficulty: (difficulty: "easy" | "medium" | "hard") => void;
   flipCard: (id: number) => void;
   resetGame: () => void;
@@ -93,6 +94,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   score: 0,
   timer: 0,
   intervalId: 0,
+  isFlipping: false,
 
   startTimer: () => {
     set((state) => {
@@ -136,6 +138,10 @@ export const useGameStore = create<GameState>((set, get) => ({
 
   flipCard: (id) =>
     set((state) => {
+      if (state.isFlipping) {
+        return { cards: state.cards };
+      }
+
       const newCards = state.cards.map((card) =>
         card.id === id ? { ...card, flipped: !card.flipped } : card
       );
@@ -151,11 +157,18 @@ export const useGameStore = create<GameState>((set, get) => ({
       // ===========================================================================
 
       if (flippedCards.length === 2) {
-        set((state) => ({ score: state.score + 1 }));
+        set({ isFlipping: true });
 
+        set((state) => ({ score: state.score + 1 }));
+        setTimeout(() => {
+          set({ isFlipping: false });
+        }, 1000);
         if (flippedCards[0].image === flippedCards[1].image) {
           newCards.forEach((card) => {
-            if (card.image === flippedCards[0].image) card.matched = true;
+            if (card.image === flippedCards[0].image) {
+              card.matched = true;
+              set({ isFlipping: false });
+            }
           });
         } else {
           setTimeout(() => {
