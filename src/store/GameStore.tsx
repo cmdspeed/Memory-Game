@@ -48,9 +48,15 @@ type GameState = {
   cards: CardType[];
   difficulty: "easy" | "medium" | "hard";
   score: number;
+  timer: number;
+  intervalId: number;
+  isFlipping: boolean;
   setDifficulty: (difficulty: "easy" | "medium" | "hard") => void;
   flipCard: (id: number) => void;
   resetGame: () => void;
+  startTimer: () => void;
+  stopTimer: () => void;
+  saveGameHistory: () => void;
 };
 
 const shuffleArray = (array: string[]) =>
@@ -72,6 +78,7 @@ const generateCards = (difficulty: "easy" | "medium" | "hard") => {
       pairs = 6;
   }
   const selectedImages = shuffleArray(images).slice(0, pairs);
+
   const cards = [...selectedImages, ...selectedImages];
   return shuffleArray(cards).map((image, index) => ({
     id: index,
@@ -81,13 +88,60 @@ const generateCards = (difficulty: "easy" | "medium" | "hard") => {
   }));
 };
 
-export const useGameStore = create<GameState>((set) => ({
+export const useGameStore = create<GameState>((set, get) => ({
   cards: generateCards("easy"),
   difficulty: "easy",
   score: 0,
+  timer: 0,
+  intervalId: 0,
+  isFlipping: false,
+
+  startTimer: () => {
+    set((state) => {
+      if (state.intervalId) {
+        clearInterval(state.intervalId);
+      }
+
+      const interval = setInterval(() => {
+        set((s) => ({ timer: s.timer + 1 }));
+      }, 1000);
+
+      return { intervalId: interval };
+    });
+  },
+  saveGameHistory() {
+    const { score, timer, difficulty } = get();
+    const historyItem = {
+      score,
+      timer,
+      difficulty,
+      date: new Date().toLocaleString(),
+    };
+
+    const history = JSON.parse(localStorage.getItem("gameHistory") ?? "[]");
+    history.push(historyItem);
+    localStorage.setItem("gameHistory", JSON.stringify(history));
+  },
+
+  stopTimer: () => {
+    const { intervalId, timer, score, saveGameHistory } = get();
+    if (intervalId) {
+      clearInterval(intervalId);
+      set({ intervalId: 0 });
+      alert(
+        `Well done! It took you ${timer} seconds. number of attempts: ${score}`
+      );
+      saveGameHistory();
+      get().resetGame();
+    }
+  },
 
   flipCard: (id) =>
     set((state) => {
+      if (state.isFlipping) {
+        return { cards: state.cards };
+      }
+
       const newCards = state.cards.map((card) =>
         card.id === id ? { ...card, flipped: !card.flipped } : card
       );
@@ -96,12 +150,25 @@ export const useGameStore = create<GameState>((set) => ({
         (card) => card.flipped && !card.matched
       );
 
-      if (flippedCards.length === 2) {
-        set((state) => ({ score: state.score + 1 }));
+      // start timer================================================================
+      if (state.intervalId === 0 && flippedCards.length > 0) {
+        get().startTimer();
+      }
+      // ===========================================================================
 
+      if (flippedCards.length === 2) {
+        set({ isFlipping: true });
+
+        set((state) => ({ score: state.score + 1 }));
+        setTimeout(() => {
+          set({ isFlipping: false });
+        }, 1000);
         if (flippedCards[0].image === flippedCards[1].image) {
           newCards.forEach((card) => {
-            if (card.image === flippedCards[0].image) card.matched = true;
+            if (card.image === flippedCards[0].image) {
+              card.matched = true;
+              set({ isFlipping: false });
+            }
           });
         } else {
           setTimeout(() => {
@@ -115,6 +182,12 @@ export const useGameStore = create<GameState>((set) => ({
         }
       }
 
+      if (newCards.every((card) => card.matched)) {
+        setTimeout(() => {
+          get().stopTimer();
+        }, 500);
+      }
+
       return { cards: newCards };
     }),
 
@@ -122,12 +195,22 @@ export const useGameStore = create<GameState>((set) => ({
     set((state) => ({
       cards: generateCards(state.difficulty),
       score: 0,
+      timer: 0,
     })),
 
   setDifficulty: (difficulty) =>
-    set(() => ({
-      difficulty,
-      cards: generateCards(difficulty),
-      score: 0,
-    })),
+    set(() => {
+      const { intervalId } = get();
+
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+      return {
+        difficulty,
+        cards: generateCards(difficulty),
+        score: 0,
+        timer: 0,
+        intervalId: 0,
+      };
+    }),
 }));
