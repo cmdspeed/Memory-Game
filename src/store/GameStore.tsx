@@ -110,7 +110,9 @@ export const useGameStore = create<GameState>((set, get) => ({
     if (intervalId) {
       clearInterval(intervalId);
       set({ intervalId: 0 });
-      alert(`Brawo! Zajęło Ci to ${timer} sekund. liczba prób: ${score}`);
+      alert(
+        `Well done! It took you ${timer} seconds. number of attempts: ${score}`
+      );
       get().resetGame();
       get().startTimer();
     }

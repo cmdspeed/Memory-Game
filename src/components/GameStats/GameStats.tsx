@@ -6,8 +6,8 @@ export const GameStats = () => {
 
   return (
     <div className="game-stats">
-      <p>Liczba prób: {score}</p>
-      <p>czas: {timer} sek</p>
+      <p>number of attempts: {score}</p>
+      <p>time: {timer} second</p>
     </div>
   );
 };
