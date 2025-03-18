@@ -12,10 +12,6 @@ export const GameBoard: React.FC = () => {
     "easy" | "medium" | "hard"
   >("easy");
 
-  useEffect(() => {
-    startTimer();
-  }, [startTimer]);
-
   const handleLevelClick = (level: "easy" | "medium" | "hard") => {
     setSelectedLevel(level);
     setDifficulty(level);

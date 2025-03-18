@@ -131,7 +131,6 @@ export const useGameStore = create<GameState>((set, get) => ({
       );
       saveGameHistory();
       get().resetGame();
-      get().startTimer();
     }
   },
 
@@ -144,6 +143,12 @@ export const useGameStore = create<GameState>((set, get) => ({
       const flippedCards = newCards.filter(
         (card) => card.flipped && !card.matched
       );
+
+      // start timer================================================================
+      if (state.intervalId === 0 && flippedCards.length > 0) {
+        get().startTimer();
+      }
+      // ===========================================================================
 
       if (flippedCards.length === 2) {
         set((state) => ({ score: state.score + 1 }));
@@ -181,11 +186,18 @@ export const useGameStore = create<GameState>((set, get) => ({
     })),
 
   setDifficulty: (difficulty) =>
-    set(() => ({
-      difficulty,
-      cards: generateCards(difficulty),
-      score: 0,
-      timer: 0,
-      intervalId: 0,
-    })),
+    set(() => {
+      const { intervalId } = get();
+
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+      return {
+        difficulty,
+        cards: generateCards(difficulty),
+        score: 0,
+        timer: 0,
+        intervalId: 0,
+      };
+    }),
 }));
