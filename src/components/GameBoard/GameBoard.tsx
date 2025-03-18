@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useGameStore } from "../../store/GameStore";
 import { Card } from "./Card";
 import "../styles/GameBoard/GameBoard.scss";
@@ -6,7 +6,7 @@ import { GameStats } from "../GameStats/GameStats";
 import { GameHistory } from "../GameHistory/GameHistory";
 
 export const GameBoard: React.FC = () => {
-  const { cards, resetGame, setDifficulty, startTimer } = useGameStore();
+  const { cards, resetGame, setDifficulty } = useGameStore();
 
   const [selectedLevel, setSelectedLevel] = useState<
     "easy" | "medium" | "hard"
