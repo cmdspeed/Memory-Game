@@ -6,8 +6,10 @@ $border-btn-color: #2c6a2f;
 $box-shadow-color: rgba(0, 0, 0, 0.1);
 //card variables
 $bg-card-color: #ccc;
+$card-gradient: linear-gradient(135deg, $brad-color, $border-btn-color);
 $border-card-color: #333;
 $matched-color: #90ee90;
 $back-card-color: #ddd;
+$fliped-color: linear-gradient(135deg, #fbc2eb, #a6c1ee);
 //gameboard variables
 $gameboard-color: #f4f4f4;
