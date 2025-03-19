@@ -1,4 +1,17 @@
 @use "../Variables/Variables.scss" as *;
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px #00ff00;
+  }
+  50% {
+    box-shadow: 0 0 20px #00ff00;
+  }
+  100% {
+    box-shadow: 0 0 5px #00ff00;
+  }
+}
+
 .card {
   width: 3.75rem;
   height: 3.75rem;
@@ -30,6 +43,7 @@
 
   &.matched {
     background: $matched-color;
+    animation: glow 1s infinite alternate;
   }
 
   img {
