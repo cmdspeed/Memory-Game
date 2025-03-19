@@ -1,7 +1,7 @@
 // Zustand store
 import { create } from "zustand";
 import { generateCards } from "./generateCards/generateCards";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 type CardType = {
