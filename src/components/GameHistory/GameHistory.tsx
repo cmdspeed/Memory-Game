@@ -20,9 +20,9 @@ export const GameHistory = () => {
 
   return (
     <div className="game-history">
-      <h2>Historia gier</h2>
+      <h2>Game History</h2>
       {history.length === 0 ? (
-        <p>Brak zapisanej historii.</p>
+        <p>no information about game history</p>
       ) : (
         <table>
           <thead>
