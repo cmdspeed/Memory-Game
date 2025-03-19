@@ -1,0 +1,21 @@
+.reset-button,
+.level {
+  margin: 0.31rem;
+  padding: 0.62rem 1.25rem;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #45a049;
+  }
+
+  &.active {
+    background-color: #3e8e41;
+    border: 2px solid #2c6a2f;
+  }
+}

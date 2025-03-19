@@ -4,6 +4,7 @@ import { Card } from "./Card";
 import "../styles/GameBoard/GameBoard.scss";
 import { GameStats } from "../GameStats/GameStats";
 import { GameHistory } from "../GameHistory/GameHistory";
+import { MainButton } from "../MainButton/MainButton";
 
 export const GameBoard: React.FC = () => {
   const { cards, resetGame, setDifficulty } = useGameStore();
@@ -19,29 +20,29 @@ export const GameBoard: React.FC = () => {
 
   return (
     <div className="game-board">
-      <button onClick={resetGame} className="reset-button">
+      <MainButton onClick={resetGame} className="reset-button">
         Restart Game
-      </button>
+      </MainButton>
       <GameStats />
       <div>
-        <button
+        <MainButton
           onClick={() => handleLevelClick("easy")}
           className={`level ${selectedLevel === "easy" ? "active" : ""}`}
         >
           Easy
-        </button>
-        <button
+        </MainButton>
+        <MainButton
           onClick={() => handleLevelClick("medium")}
           className={`level ${selectedLevel === "medium" ? "active" : ""}`}
         >
-          Medium
-        </button>
-        <button
+          medium
+        </MainButton>
+        <MainButton
           onClick={() => handleLevelClick("hard")}
           className={`level ${selectedLevel === "hard" ? "active" : ""}`}
         >
-          Hard
-        </button>
+          hard
+        </MainButton>
       </div>
       <div className="board">
         {cards.map((card) => (
