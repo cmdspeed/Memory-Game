@@ -9,7 +9,7 @@
   justify-content: center;
   cursor: pointer;
   transition: transform 0.3s;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px $box-shadow-color;
   @media (min-width: 470px) {
     width: 5rem;
     height: 5rem;
