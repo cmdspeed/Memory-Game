@@ -1,21 +1,35 @@
+@use "../Variables/Variables.scss" as *;
 .card {
-  width: 100px;
-  height: 100px;
-  background: #ccc;
-  border: 2px solid #333;
+  width: 3.75rem;
+  height: 3.75rem;
+  background: $bg-card-color;
+  border: 2px solid $border-card-color;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: transform 0.3s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  @media (min-width: 470px) {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  @media (min-width: 768px) {
+    width: 6.25rem;
+    height: 6.25rem;
+  }
+  @media (min-width: 1024px) {
+    width: 8.125rem;
+    height: 8, 125rem;
+  }
 
   &.flipped {
-    background: white;
+    background: $text-color;
   }
 
   &.matched {
-    background: lightgreen;
+    background: $matched-color;
   }
 
   img {
@@ -24,7 +38,7 @@
   }
 
   .back {
-    background-color: #ddd;
+    background-color: $back-card-color;
     width: 80%;
     height: 80%;
     border-radius: 5px;
