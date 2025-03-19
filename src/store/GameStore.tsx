@@ -1,6 +1,8 @@
 // Zustand store
 import { create } from "zustand";
 import { generateCards } from "./generateCards/generateCards";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type CardType = {
   id: number;
@@ -64,9 +66,20 @@ export const useGameStore = create<GameState>((set, get) => ({
     if (intervalId) {
       clearInterval(intervalId);
       set({ intervalId: 0 });
-      alert(
-        `Well done! It took you ${timer} seconds. number of attempts: ${score}`
+
+      toast.success(
+        `Well done! It took you ${timer} seconds. number of attempts: ${score}`,
+        {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
       );
+
       saveGameHistory();
       get().resetGame();
     }

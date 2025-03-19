@@ -5,6 +5,7 @@ import "../styles/GameBoard/GameBoard.scss";
 import { GameStats } from "../GameStats/GameStats";
 import { GameHistory } from "../GameHistory/GameHistory";
 import { MainButton } from "../MainButton/MainButton";
+import { ToastContainer } from "react-toastify";
 
 export const GameBoard: React.FC = () => {
   const { cards, resetGame, setDifficulty } = useGameStore();
@@ -28,7 +29,6 @@ export const GameBoard: React.FC = () => {
       setIsAnimating(false);
     }, 800); // time animation (800ms)
 
-    // Czyszczenie timera
     return () => clearTimeout(timer);
   }, [selectedLevel]);
 
@@ -38,6 +38,7 @@ export const GameBoard: React.FC = () => {
         isAnimating ? "animating" : ""
       }`}
     >
+      <ToastContainer />
       <MainButton onClick={resetGame} className="reset-button">
         Restart Game
       </MainButton>
