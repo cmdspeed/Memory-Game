@@ -1,6 +1,13 @@
 .game-stats {
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 0.875rem;
+  font-weight: 600;
   color: #333;
   margin-bottom: 10px;
+  @media (min-width: 601px) {
+    font-size: 1rem;
+  }
+
+  @media (min-width: 1025px) {
+    font-size: 1.125rem;
+  }
 }
