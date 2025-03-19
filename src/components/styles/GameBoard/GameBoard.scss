@@ -1,5 +1,19 @@
 @use "../Variables/Variables.scss" as *;
 
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.opacity {
+  opacity: 0;
+}
+
 .game-board {
   padding: 1.25rem;
   background-color: $gameboard-color;
@@ -17,6 +31,12 @@
   min-height: 100vh;
   margin: 0 auto;
   overflow: hidden;
+
+  &.animating {
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeIn 0.8s ease-out forwards;
+  }
 
   .board {
     display: flex;
