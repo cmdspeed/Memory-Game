@@ -96,8 +96,6 @@ video {
   padding: 0;
   border: 0;
   font-size: 100%;
-
-  vertical-align: baseline;
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -120,7 +118,6 @@ body {
   font-weight: 400;
   font-style: normal;
   font-size: 16px;
-  color: var(--main-text-color);
 }
 
 a:focus,
