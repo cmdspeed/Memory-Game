@@ -3,8 +3,8 @@
 .reset-button,
 .level {
   margin: 0.31rem;
-  padding: 0.62rem 1.25rem;
-  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
   cursor: pointer;
   background-color: $brad-color;
   color: $text-color;
@@ -19,5 +19,15 @@
   &.active {
     background-color: $active-btn-color;
     border: 2px solid $border-btn-color;
+  }
+
+  @media (min-width: 601px) {
+    font-size: 1rem;
+    padding: 0.75rem 1.25rem;
+  }
+
+  @media (min-width: 1025px) {
+    font-size: 1.125rem;
+    padding: 1rem 1.5rem;
   }
 }
