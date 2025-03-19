@@ -120,8 +120,7 @@ body {
   font-size: 16px;
 }
 
-a:focus,
-button:focus {
+a:focus {
   outline: none;
   box-shadow: none;
   -moz-box-shadow: none;
@@ -133,12 +132,6 @@ button:focus {
   -moz-tap-highlight-color: transparent;
   -ms-tap-highlight-color: transparent;
   -khtml-tap-highlight-color: transparent;
-}
-
-button:focus,
-input:focus,
-textarea:focus {
-  border: none;
 }
 
 ol,
